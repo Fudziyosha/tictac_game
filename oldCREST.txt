@@ -1,0 +1,86 @@
+package main
+
+import (
+	"fmt"
+)
+
+func tictac() string {
+	slice := [][]string{
+		{"_", "X", "_"},
+		{"_", "_", "_"},
+		{"_", "_", "_"},
+	}
+	for y := 0; y < len(slice); y++ {
+		for x := 0; x < len(slice); x++ {
+			fmt.Print(slice[y][x])
+		}
+		fmt.Print("\n")
+	}
+	//GameLoop:
+	//	for {
+	//		freeCeils := 9
+	//		var move int
+	//		p1 := "X"
+	//		var Field = map[int]string{
+	//			1: " ",
+	//			2: " ",
+	//			3: " ",
+	//			4: " ",
+	//			5: " ",
+	//			6: " ",
+	//			7: " ",
+	//			8: " ",
+	//			9: " ",
+	//		}
+	//		for freeCeils > 0 {
+	//			for {
+	//				fmt.Print("Ваш ход,введите от 1 до 9\n")
+	//				_, _ = fmt.Scan(&move)
+	//				if move < 1 || move > 9 || Field[move] == "X" || Field[move] == "O" {
+	//					fmt.Println("Введите значение от 1 до 9")
+	//					continue
+	//				}
+	//				if Field[move] != " " {
+	//					fmt.Println("Введите значение от 1 до 9")
+	//					continue
+	//				} else {
+	//					Field[move] = p1
+	//					fmt.Printf("Вы поставили %s на %d\n", p1, move)
+	//					freeCeils--
+	//					break
+	//				}
+	//
+	//			}
+	//			for _, v := range slice {
+	//				if Field[v[0]] == p1 && Field[v[1]] == p1 && Field[v[2]] == p1 {
+	//					fmt.Println("Победитель " + p1)
+	//					freeCeils = 0
+	//					break
+	//				}
+	//			}
+	//			if freeCeils == 0 {
+	//				break
+	//			}
+	//			if p1 == "X" {
+	//				p1 = "O"
+	//			} else {
+	//				p1 = "X"
+	//			}
+	//		}
+	//		fmt.Print("Еще разочек брат? (y/n): ")
+	//		var ans string
+	//		_, err := fmt.Scan(&ans)
+	//		if err != nil {
+	//			fmt.Println(err.Error())
+	//			return ""
+	//		}
+	//		fmt.Println(ans)
+	//		if ans != "y" && ans != "Y" {
+	//			break GameLoop
+	//		}
+	//	}
+	return ""
+}
+func main() {
+	tictac()
+}

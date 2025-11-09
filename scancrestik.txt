@@ -1,0 +1,62 @@
+func input() (vy, vx int) {
+	fmt.Print("Введите числа y и x (1-3):\n")
+	for {
+		bs := bufio.NewScanner(os.Stdin)
+		for bs.Scan() {
+			y1, err := strconv.Atoi(vy)
+			if err != nil {
+				fmt.Println("Error:", y1)
+			}
+			if vy > 3 || vx > 3 || vy < 1 || vx < 1 {
+				fmt.Println("Неверно,введите y и x (1-3): ")
+				continue
+			} else {
+				return
+			}
+		}
+	}
+}
+
+
+func input() (vy, vx int) {
+	fmt.Print("Введите числа y и x (1-3):\n")
+	for {
+		vy = checkInputOne(vy)
+		vx = checkInputTwo(vx)
+		if vy > 3 || vx > 3 || vy < 1 || vx < 1 {
+			fmt.Println("Неверно,введите y и x (1-3): ")
+			continue
+		}
+		return vy, vx
+	}
+}
+
+// Проверка ввода и конвертация в int
+func checkInputOne(num int) int {
+	bn := bufio.NewScanner(os.Stdin)
+	if bn.Scan() {
+		line := bn.Text()
+		num, _ = strconv.Atoi(line)
+	}
+	return num
+}
+
+func checkInputTwo(num2 int) int {
+	bn := bufio.NewScanner(os.Stdin)
+	if bn.Scan() {
+		line := bn.Text()
+		num2, _ = strconv.Atoi(line)
+	}
+	return num2
+}
+
+	for i := 0; i < 3; i++ {
+		if checkfield[i][0] != "_" && checkfield[i][0] == checkfield[i][1] && checkfield[i][1] == checkfield[i][2] {
+			return "Победитель:"
+		}
+	}
+	for j := 0; j < 3; j++ {
+		if checkfield[0][j] != "_" && checkfield[0][j] == checkfield[1][j] && checkfield[1][j] == checkfield[2][j] {
+			return "Победитель:"
+		}
+	}
