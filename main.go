@@ -5,38 +5,28 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // Ввод
 func input() (vy, vx int) {
 	for {
-		vy = checkInputOne(vy)
-		vx = checkInputTwo(vx)
+		var integer string
+		in := bufio.NewReader(os.Stdin)
+		integer, err := in.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error:", err)
+		}
+		newInteger := strings.TrimSpace(integer)
+		stringSlice := strings.Split(newInteger, " ")
+		vy, _ = strconv.Atoi(stringSlice[0])
+		vx, _ = strconv.Atoi(stringSlice[1])
 		if vy > 3 || vx > 3 || vy < 1 || vx < 1 {
 			fmt.Println("Неверно,введите от 1 до 3: ")
 			continue
 		}
 		return vy, vx
 	}
-}
-
-// Проверка ввода и конвертация в int
-func checkInputOne(num int) int {
-	bn := bufio.NewScanner(os.Stdin)
-	if bn.Scan() {
-		line := bn.Text()
-		num, _ = strconv.Atoi(line)
-	}
-	return num
-}
-
-func checkInputTwo(num2 int) int {
-	bn := bufio.NewScanner(os.Stdin)
-	if bn.Scan() {
-		line := bn.Text()
-		num2, _ = strconv.Atoi(line)
-	}
-	return num2
 }
 
 // Поле для вывода
@@ -49,52 +39,47 @@ func field(copySlice [][]string) {
 	}
 }
 
+func switchPlayer(p1 string) string {
+	if p1 == "X" {
+		return "O"
+	}
+	return "X"
+}
+
 // Сама игра
-func game() {
-loop:
-	for {
-		slice := [][]string{
-			{"_", "_", "_"},
-			{"_", "_", "_"},
-			{"_", "_", "_"},
+func game() string {
+	p1 := "X"
+	slice := [][]string{
+		{"_", "_", "_"},
+		{"_", "_", "_"},
+		{"_", "_", "_"},
+	}
+	fmt.Print("Вводите числа сначала y (1-3),после x (1-3)\n")
+	freeCeils := 9
+game:
+	for freeCeils > 0 {
+		fmt.Printf("Ходит %v\n", p1)
+		v, q := input()
+		v -= 1
+		q -= 1
+		if slice[v][q] == "X" || slice[v][q] == "O" {
+			fmt.Print("Клетка занята,введите заново y и x (1-3): \n")
+			field(slice)
+			continue game
 		}
-		fmt.Print("Вводите числа сначала y (1-3),после x (1-3)\n")
-		p1 := "X"
-		freeCeils := 9
-	game:
-		for freeCeils > 0 {
-			fmt.Printf("Ходит %v\n", p1)
-			v, q := input()
-			v -= 1
-			q -= 1
-			for y := 0; y < len(slice); y++ {
-				for x := 0; x < len(slice); x++ {
-					if y == v && x == q {
-						if slice[y][x] == "X" || slice[y][x] == "O" {
-							fmt.Print("Клетка занята,введите заново y и x (1-3): \n")
-							field(slice)
-							continue game
-						}
-						slice[y][x] = p1
-						field(slice)
-					}
-				}
-				if checkWinner(slice) != "" {
-					fmt.Println("Победитель: " + p1)
-					continue loop
-				}
-			}
-			if p1 == "X" {
-				p1 = "O"
-			} else {
-				p1 = "X"
-			}
-			freeCeils--
-			if freeCeils < 1 {
-				fmt.Println("Ничья!")
-				continue loop
-			}
+		slice[v][q] = p1
+		field(slice)
+		if checkWinner(slice) != "" {
+			fmt.Println("Победитель: " + p1)
+			break game
 		}
+		p1 = switchPlayer(p1)
+		freeCeils--
+	}
+	if freeCeils == 0 {
+		return "Ничья!"
+	} else {
+		return ""
 	}
 }
 
@@ -120,5 +105,7 @@ func checkWinner(checkfield [][]string) string {
 }
 
 func main() {
-	game()
+	for {
+		fmt.Println(game())
+	}
 }
