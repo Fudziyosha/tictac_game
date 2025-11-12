@@ -19,6 +19,10 @@ func input() (vy, vx int) {
 		}
 		newInteger := strings.TrimSpace(integer)
 		stringSlice := strings.Split(newInteger, " ")
+		if len(stringSlice) > 2 {
+			fmt.Println("Неверно,введите от 1 до 3: ")
+			continue
+		}
 		vy, _ = strconv.Atoi(stringSlice[0])
 		vx, _ = strconv.Atoi(stringSlice[1])
 		if vy > 3 || vx > 3 || vy < 1 || vx < 1 {
